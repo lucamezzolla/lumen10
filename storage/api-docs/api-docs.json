@@ -1,0 +1,43 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/pet": {
+            "post": {
+                "tags": [
+                    "pet"
+                ],
+                "summary": "Add a new pet to the store",
+                "operationId": "addPet",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/Pet"
+                },
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/admin/user/list": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "An example endpoint"
+                    }
+                }
+            }
+        }
+    }
+}
