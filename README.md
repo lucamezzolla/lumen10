@@ -35,10 +35,14 @@ The Lumen framework is open-sourced software licensed under the [MIT license](ht
 
 If you are using SSH and private key technique you can download my project like this:
 > git clone git@github.com:lucamezzolla/lumen10.git
+
+Then
 > cd lumen10
 
 Edit the .env file and set the database name, username and password. If you want to change the JWT secret code first like this:
 > php artisan jwt:secret
+
+Then
 > vim .env
 
 Run the following command to create the database with the name indicated in the .env file and the "user" table. Set production mode and answer yes when asked to create the database.
@@ -52,7 +56,7 @@ Open your database and browse the user table to see the newly created user (the 
 Please note: the newly created user has the role "user". You can now upgrade the role from user to "admin". Run a webserver with php like this:
 > php -S localhost:8000 -t public
 
-Open the Postman application and authorize the user created at the address: http://localhost:8000/api/login (POST) and in the body (formdata) write email: admin and password: 1234
+Open the Postman application and authorize the user created at the address: http://localhost:8000/api/login (POST) and in the body (formdata) write email: name@email.com and password: 1234
 
 The answer will be like this:
 {
