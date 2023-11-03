@@ -24,3 +24,70 @@ If you discover a security vulnerability within Lumen, please send an e-mail to 
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Requirements
+
+- PHP >= 8.1
+- MySQL 8 (or MariaDB)
+
+
+## Download and setup
+
+If you are using SSH and private key technique you can download my project like this:
+> git clone git@github.com:lucamezzolla/lumen10.git
+> cd lumen10
+
+Edit the .env file and set the database name, username and password. If you want to change the JWT secret code first like this:
+> php artisan jwt:secret
+> vim .env
+
+Run the following command to create the database with the name indicated in the .env file and the "user" table. Set production mode and answer yes when asked to create the database.
+> php artisan migrate
+
+Let's create a user with the command:
+> php artisan db:seed --class=UserSeeder
+
+Open your database and browse the user table to see the newly created user (the plaintext password is 1234).
+
+Please note: the newly created user has the role "user". You can now upgrade the role from user to "admin". Run a webserver with php like this:
+> php -S localhost:8000 -t public
+
+Open the Postman application and authorize the user created at the address: http://localhost:8000/api/login (POST) and in the body (formdata) write email: admin and password: 1234
+
+The answer will be like this:
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjk5MDQ3NDU3LCJleHAiOjE2OTkwNTEwNTcsIm5iZiI6MTY5OTA0NzQ1NywianRpIjoiWlVSM2RBY2ZNeGJOdU1ZMiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.-lF1Lvn-SgbkGiUabolRH0Bu1b_BYeARhHa6hEI2NGo",
+    "token_type": "bearer",
+    "user": {
+        "id": 1,
+        "name": "name",
+        "email": "name@email.com",
+        "remember_token": null,
+        "created_at": "2023-10-27T20:24:38.000000Z",
+        "updated_at": "2023-10-27T20:24:38.000000Z",
+        "role": "user"
+    },
+    "expires_in": 86400
+}
+
+Copy and paste the token and you can use it in the other requests you make by indicating it in the header:
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjk5MDQ3NDU3LCJleHAiOjE2OTkwNTEwNTcsIm5i ZiI6MTY5OTA0NzQ1NywianRpIjoiWlVSM2RBY2ZNeGJOdU1ZMiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.-lF1Lvn-Sg bkGiUabolRH0Bu1b_BYeARhHa6hEI2NGo
+
+and be sure to also indicate:
+
+ContentType: application/json
+
+To change your user by setting the role from user to admin you can use the http://localhost:8000/api/admin/user/update/1 (PUT) service. Make sure to add the headers as described above. In the body (raw JSON) you can write:
+
+{
+     "role": "admin"
+}
+
+However you can find all the routes already set up in this project in the routes/web.php file.
+
+Enjoy it!
+
+Luca
+
+
+
