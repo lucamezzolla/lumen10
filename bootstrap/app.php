@@ -85,6 +85,9 @@ $app->routeMiddleware([
     'role' => App\Http\Middleware\RoleMiddleware::class,
 ]);
 
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
